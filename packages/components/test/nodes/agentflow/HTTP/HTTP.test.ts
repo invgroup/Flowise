@@ -6,21 +6,21 @@ const { nodeClass } = require('../../../../nodes/agentflow/HTTP/HTTP')
 // Custom mock for axios to behave like a function AND have get/post
 jest.mock('axios', () => {
     const mockAxios = jest.fn() as jest.MockedFunction<any> & {
-        get: jest.Mock;
-        post: jest.Mock;
-        request: jest.Mock;
-    };
-    mockAxios.get = jest.fn();
-    mockAxios.post = jest.fn();
-    mockAxios.request = jest.fn();
-    return mockAxios;
-});
+        get: jest.Mock
+        post: jest.Mock
+        request: jest.Mock
+    }
+    mockAxios.get = jest.fn()
+    mockAxios.post = jest.fn()
+    mockAxios.request = jest.fn()
+    return mockAxios
+})
 
 const mockedAxios = axios as jest.MockedFunction<typeof axios> & {
-    get: jest.Mock;
-    post: jest.Mock;
-    request: jest.Mock;
-};
+    get: jest.Mock
+    post: jest.Mock
+    request: jest.Mock
+}
 
 jest.mock('../../../../src/utils', () => ({
     getCredentialData: jest.fn(),
@@ -28,7 +28,7 @@ jest.mock('../../../../src/utils', () => ({
 }))
 
 describe('HTTP_Agentflow Node', () => {
-    let node: any;
+    let node: any
 
     const baseNodeData = {
         id: '1',
@@ -45,16 +45,16 @@ describe('HTTP_Agentflow Node', () => {
         },
         credential: '',
         outputs: {}
-    } as INodeData;
+    } as INodeData
 
     const options = {
         agentflowRuntime: { state: {} }
-    } as ICommonObject;
+    } as ICommonObject
 
     beforeEach(() => {
-        jest.clearAllMocks();
-        node = new nodeClass();
-    });
+        jest.clearAllMocks()
+        node = new nodeClass()
+    })
 
     it('should make a successful GET request', async () => {
         mockedAxios.mockResolvedValue({
@@ -62,9 +62,9 @@ describe('HTTP_Agentflow Node', () => {
             status: 200,
             statusText: 'OK',
             headers: {}
-        });
+        })
 
-        const result = await node.run(baseNodeData, '', options);
+        const result = await node.run(baseNodeData, '', options)
 
         expect(mockedAxios).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -72,11 +72,11 @@ describe('HTTP_Agentflow Node', () => {
                 url: 'https://api.example.com/test',
                 headers: expect.any(Object)
             })
-        );
+        )
 
-        expect(result.output.http.data).toEqual({ success: true });
-        expect(result.output.http.status).toBe(200);
-    });
+        expect(result.output.http.data).toEqual({ success: true })
+        expect(result.output.http.status).toBe(200)
+    })
 
     it('should handle invalid JSON body with fallback', async () => {
         const nodeData = {
@@ -87,12 +87,10 @@ describe('HTTP_Agentflow Node', () => {
                 bodyType: 'json',
                 body: '{foo:bar}' // invalid JSON
             }
-        };
+        }
 
-        await expect(node.run(nodeData, '', options)).rejects.toThrow(
-            /Invalid JSON format/
-        );
-    });
+        await expect(node.run(nodeData, '', options)).rejects.toThrow(/Invalid JSON format/)
+    })
 
     it('should throw an error for failed HTTP request', async () => {
         mockedAxios.mockRejectedValue({
@@ -103,10 +101,8 @@ describe('HTTP_Agentflow Node', () => {
                 headers: {}
             },
             message: 'Request failed'
-        });
+        })
 
-        await expect(node.run(baseNodeData, '', options)).rejects.toThrow(
-            'Invalid input'
-        );
-    });
-});
+        await expect(node.run(baseNodeData, '', options)).rejects.toThrow('Invalid input')
+    })
+})
