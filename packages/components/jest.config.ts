@@ -9,7 +9,7 @@ module.exports = {
 
   // Use ts-jest to transform TypeScript files
   transform: {
-      '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest'
   },
 
   // Find test files
@@ -20,7 +20,7 @@ module.exports = {
 
   // Add moduleNameMapper to mock specific modules
   moduleNameMapper: {
-      '^axios$': '<rootDir>/test/mocks/axios.ts'
+    '^axios$': '<rootDir>/test/mocks/axios.ts'
   },
 
   // Display individual test results with the test suite hierarchy.
