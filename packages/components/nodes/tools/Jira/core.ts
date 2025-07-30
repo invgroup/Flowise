@@ -213,8 +213,8 @@ class ListIssuesTool extends BaseJiraTool {
         }
 
         if (jql) queryParams.append('jql', jql)
-        if (params.maxResults) queryParams.append('maxResults', params.maxResults.toString())
-        if (params.startAt) queryParams.append('startAt', params.startAt.toString())
+        if (params.maxResults !== undefined && params.maxResults !== null) queryParams.append('maxResults', params.maxResults.toString())
+        if (params.startAt !== undefined && params.startAt !== null) queryParams.append('startAt', params.startAt.toString())
 
         const endpoint = `search?${queryParams.toString()}`
 
@@ -552,8 +552,8 @@ class ListCommentsTool extends BaseJiraTool {
         const params = { ...arg, ...this.defaultParams }
         const queryParams = new URLSearchParams()
 
-        if (params.maxResults) queryParams.append('maxResults', params.maxResults.toString())
-        if (params.startAt) queryParams.append('startAt', params.startAt.toString())
+        if (params.maxResults !== undefined && params.maxResults !== null) queryParams.append('maxResults', params.maxResults.toString())
+        if (params.startAt !== undefined && params.startAt !== null) queryParams.append('startAt', params.startAt.toString())
 
         const endpoint = `issue/${params.issueKey}/comment?${queryParams.toString()}`
 
@@ -774,8 +774,8 @@ class SearchUsersTool extends BaseJiraTool {
         const queryParams = new URLSearchParams()
 
         if (params.query) queryParams.append('query', params.query)
-        if (params.maxResults) queryParams.append('maxResults', params.maxResults.toString())
-        if (params.startAt) queryParams.append('startAt', params.startAt.toString())
+        if (params.maxResults !== undefined && params.maxResults !== null) queryParams.append('maxResults', params.maxResults.toString())
+        if (params.startAt !== undefined && params.startAt !== null) queryParams.append('startAt', params.startAt.toString())
 
         const endpoint = `user/search?${queryParams.toString()}`
 
